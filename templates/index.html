@@ -1,0 +1,58 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英単語アプリ</title>
+    <!-- CSSファイルを読み込む -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>わたしの英単語帳</h1>
+            <p>Supabaseから取得した単語リストです。</p>
+        </header>
+
+        <main>
+            <!-- 単語リストをテーブルで表示 -->
+            <div class="word-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>単語</th>
+                            <th>意味</th>
+                            <th>重要度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- app.pyから渡されたwordsリストをループ処理 -->
+                        {% for word in words %}
+                        <tr>
+                            <td data-label="単語">{{ word.word }}</td>
+                            <td data-label="意味">{{ word.meaning }}</td>
+                            <td data-label="重要度" class="importance-cell">
+                                <!-- 重要度に応じて星を表示 -->
+                                <span class="stars">
+                                    {% for i in range(word.importance) %}★{% endfor %}
+                                </span>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <!-- 単語が1件もなかった場合に表示 -->
+                        <tr>
+                            <td colspan="3" class="no-data">単語が登録されていません。</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
