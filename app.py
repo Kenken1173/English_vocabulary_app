@@ -12,10 +12,13 @@ app = Flask(__name__)
 
 # Supabaseの接続情報を環境変数から取得
 url: str = os.environ.get("SUPABASE_URL")
-key: str = os.environ.get("SUPABASE_KEY")
+# anon_keyはデータの読み取りには使えますが、今回は使いません
+# key: str = os.environ.get("SUPABASE_KEY") 
+service_key: str = os.environ.get("SUPABASE_SERVICE_KEY")
 
 # Supabaseクライアントの初期化
-supabase: Client = create_client(url, key)
+# ★★★ service_roleキーを使って接続します。これによりRLSを安全にバイパスできます。 ★★★
+supabase: Client = create_client(url, service_key)
 
 @app.route('/')
 def index():
@@ -24,8 +27,10 @@ def index():
     Supabaseから単語リストを取得し、テンプレートに渡します。
     """
     try:
-        # 'word'テーブルから全てのデータを取得（idの昇順でソート）
-        response = supabase.table('word').select("*").order('id', desc=False).execute()
+        # 'words'テーブルから全てのデータを取得（idの昇順でソート）
+        # 読み取りはRLSで許可されているので、この部分は変更不要です。
+        # (もし読み取りもできなくなった場合は、読み取り用のRLSポリシーも設定します)
+        response = supabase.table('words').select("*").order('id', desc=False).execute()
         
         # 取得したデータをwords変数に格納
         words = response.data
@@ -61,8 +66,9 @@ def add_word():
             'importance': int(importance)
         }
         
-        # 'word'テーブルにデータを挿入
-        supabase.table('word').insert(data_to_insert).execute()
+        # 'words'テーブルにデータを挿入
+        # service_roleキーで接続しているので、RLSポリシーを通過して書き込めます。
+        supabase.table('words').insert(data_to_insert).execute()
 
     except Exception as e:
         # エラーが発生した場合はコンソールに出力
