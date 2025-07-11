@@ -1,5 +1,6 @@
 /* static/style.css */
 
+/* 基本スタイル */
 body {
     font-family: 'Noto Sans JP', sans-serif;
     background-color: #f4f7f6;
@@ -21,6 +22,7 @@ body {
     overflow: hidden;
 }
 
+/* ヘッダースタイル */
 header {
     background-color: #4a90e2;
     color: white;
@@ -38,11 +40,27 @@ header p {
     opacity: 0.9;
 }
 
+.header-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.header-link:hover {
+    background-color: rgba(255,255,255,0.4);
+}
+
 main {
     padding: 30px;
 }
 
-/* 登録フォームのスタイル */
+/* 登録フォームのスタイル (manage.html) */
 .add-form-container {
     margin-bottom: 40px;
     padding: 25px;
@@ -76,7 +94,7 @@ main {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    box-sizing: border-box; /* paddingを含めてwidth 100%にする */
+    box-sizing: border-box;
     font-size: 1em;
     font-family: 'Noto Sans JP', sans-serif;
 }
@@ -106,7 +124,7 @@ main {
     transform: translateY(-2px);
 }
 
-/* 単語リスト */
+/* 単語リストのテーブルスタイル (manage.html) */
 .word-list {
     width: 100%;
     border-collapse: collapse;
@@ -151,39 +169,191 @@ tbody tr:hover {
     padding: 40px;
 }
 
-/* レスポンシブ対応 */
+/* クイズページのスタイル (quiz.html) */
+.quiz-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.question-word {
+    font-family: 'Roboto', sans-serif;
+    font-size: 3.5em;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 20px 0;
+}
+
+.answer-container {
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.answer-meaning {
+    font-size: 1.8em;
+    color: #4a90e2;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.answer-meaning.show {
+    opacity: 1;
+}
+
+.quiz-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.quiz-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#show-answer-btn {
+    background-color: #28a745;
+}
+
+#show-answer-btn:hover {
+    background-color: #218838;
+}
+
+.next-btn {
+    background-color: #007bff;
+}
+.next-btn:hover {
+    background-color: #0056b3;
+}
+
+.back-btn {
+    background-color: #6c757d;
+}
+.back-btn:hover {
+    background-color: #5a6268;
+}
+
+.no-quiz {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.no-quiz p {
+    margin: 10px 0;
+}
+
+/* ランディングページのスタイル (landing.html) */
+.landing-container {
+    text-align: center;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.landing-header h1 {
+    font-size: 3em;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.landing-header p {
+    font-size: 1.2em;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.landing-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.btn {
+    display: inline-block;
+    width: 80%;
+    max-width: 300px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #4a90e2, #007bff);
+}
+
+.btn-secondary {
+    background: linear-gradient(45deg, #6c757d, #5a6268);
+}
+
+/* レスポンシブ対応 (manage.htmlのテーブル) */
 @media screen and (max-width: 600px) {
     main {
         padding: 20px;
     }
 
-    table, thead, tbody, th, td, tr {
+    .word-list table, 
+    .word-list thead, 
+    .word-list tbody, 
+    .word-list th, 
+    .word-list td, 
+    .word-list tr {
         display: block;
     }
 
-    thead tr {
+    .word-list thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    tr {
+    .word-list tr {
         border: 1px solid #ccc;
         border-radius: 8px;
         margin-bottom: 15px;
     }
     
-    td {
+    .word-list td {
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;
         padding-left: 50%;
-        min-height: 2.5em; /* 高さを確保 */
+        min-height: 2.5em;
         display: flex;
         align-items: center;
     }
 
-    td:before {
+    .word-list td:before {
         position: absolute;
         top: 50%;
         left: 15px;
@@ -195,7 +365,58 @@ tbody tr:hover {
         font-weight: bold;
     }
 
-    td:last-child {
+    .word-list td:last-child {
         border-bottom: none;
     }
+}
+
+/* ========== ここから認証機能のスタイル ========== */
+/* ログインページのスタイル */
+.login-page-container {
+    max-width: 480px;
+}
+.login-form {
+    padding: 20px 0;
+}
+.back-to-top {
+    text-align: center;
+    margin-top: 20px;
+}
+.back-to-top a {
+    color: #6c757d;
+    text-decoration: none;
+}
+.back-to-top a:hover {
+    text-decoration: underline;
+}
+
+/* Flashメッセージのスタイル */
+.flash-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+}
+.flash-message.success {
+    background-color: #28a745;
+}
+.flash-message.error {
+    background-color: #dc3545;
+}
+.flash-message.info {
+    background-color: #17a2b8;
+}
+
+/* ログアウトボタンのスタイル */
+.logout-btn {
+    background-color: rgba(220, 53, 69, 0.8) !important;
+}
+.logout-btn:hover {
+    background-color: rgba(220, 53, 69, 1) !important;
+}
+
+/* ログインフォームのボタンとの間隔を調整 */
+.login-form .form-group {
+    margin-bottom: 25px;
 }
