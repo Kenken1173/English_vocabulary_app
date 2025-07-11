@@ -1,0 +1,64 @@
+<!-- templates/quiz.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英単語クイズ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>英単語クイズ</h1>
+            <p>登録した単語からランダムに出題！</p>
+        </header>
+
+        <main>
+            <!-- 単語がDBに存在する場合 -->
+            {% if word %}
+            <div class="quiz-card">
+                <p class="question-word">{{ word.word }}</p>
+                <div class="answer-container">
+                    <p class="answer-meaning" id="answer">{{ word.meaning }}</p>
+                </div>
+                <button id="show-answer-btn" class="quiz-btn">答えを見る</button>
+            </div>
+            <div class="quiz-navigation">
+                <a href="{{ url_for('quiz') }}" class="quiz-btn next-btn">次の問題へ</a>
+                <!-- ★★★ ここのリンクを修正しました ★★★ -->
+                <a href="{{ url_for('manage') }}" class="quiz-btn back-btn">管理画面に戻る</a>
+            </div>
+            
+            <!-- 単語が存在しない場合 -->
+            {% else %}
+            <div class="no-quiz">
+                <p>クイズに出題できる単語がありません。</p>
+                <p>まずは管理画面から単語を登録してください。</p>
+                <!-- ★★★ ここのリンクを修正しました ★★★ -->
+                <a href="{{ url_for('manage') }}" class="quiz-btn back-btn">登録ページへ</a>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <!-- JavaScriptで答えの表示をコントロール -->
+    <script>
+        const showBtn = document.getElementById('show-answer-btn');
+        const answerEl = document.getElementById('answer');
+
+        if (showBtn) {
+            showBtn.addEventListener('click', () => {
+                // 'answer-meaning'に'show'クラスを付けて表示する
+                answerEl.classList.add('show');
+                // 「答えを見る」ボタンは非表示にする
+                showBtn.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
