@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英単語アプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container landing-container">
+        <header class="landing-header">
+            <h1>英単語アプリ</h1>
+            <p>クイズに挑戦するか、新しい単語を登録・管理しよう！</p>
+        </header>
+        <main class="landing-main">
+            <a href="{{ url_for('quiz') }}" class="btn btn-primary">クイズに挑戦する</a>
+            <a href="{{ url_for('manage') }}" class="btn btn-secondary">英単語を追加・管理する</a>
+        </main>
+    </div>
+</body>
+</html>
