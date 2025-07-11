@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英単語の管理</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>英単語帳アプリ管理画面</h1>
+            <p>Supabaseを使ったシンプルな英単語アプリ</p>
+            <a href="{{ url_for('logout') }}" class="header-link logout-btn">ログアウト</a>
+        </header>
+
+        <main>
+            <!-- flashメッセージの表示エリア -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- 新しい単語を登録するフォーム -->
+            <div class="add-form-container">
+                <h2>新しい単語を登録</h2>
+                <form action="{{ url_for('add_word') }}" method="post" class="add-form">
+                    <div class="form-group">
+                        <label for="word">単語</label>
+                        <input type="text" id="word" name="word" placeholder="例: apple" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="meaning">意味</label>
+                        <input type="text" id="meaning" name="meaning" placeholder="例: りんご" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="importance">重要度</label>
+                        <select id="importance" name="importance" required>
+                            <option value="" disabled selected>選択してください</option>
+                            <option value="1">★</option>
+                            <option value="2">★★</option>
+                            <option value="3">★★★</option>
+                            <option value="4">★★★★</option>
+                            <option value="5">★★★★★</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">登録する</button>
+                </form>
+            </div>
+
+            <!-- 単語リストをテーブルで表示 -->
+            <div class="word-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>単語</th>
+                            <th>意味</th>
+                            <th>重要度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for word in words %}
+                        <tr>
+                            <td data-label="単語">{{ word.word }}</td>
+                            <td data-label="意味">{{ word.meaning }}</td>
+                            <td data-label="重要度" class="importance-cell">
+                                <span class="stars">
+                                    {% for i in range(word.importance) %}★{% endfor %}
+                                </span>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="no-data">単語が登録されていません。</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
