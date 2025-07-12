@@ -21,14 +21,14 @@ supabase: Client = create_client(url, service_key)
 
 
 @app.route('/')
-def landing():
+def index():
     """
     クイズか管理画面かを選択するトップページを表示します。
     """
-    return render_template('landing.html')
+    return render_template('index.html')
 
 
-# ★★★ ここから認証関連のルートを追加・修正 ★★★
+# 認証関連のルート
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
@@ -56,7 +56,7 @@ def logout():
     """
     session.pop('logged_in', None) # セッションからログイン情報を削除
     flash('ログアウトしました。', 'info')
-    return redirect(url_for('landing'))
+    return redirect(url_for('index'))
 
 
 @app.route('/manage')
