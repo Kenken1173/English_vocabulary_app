@@ -10,11 +10,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-# ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-# 修正点: セッションの秘密鍵を.envファイルから読み込む固定値に変更
-# これにより、サーバーがリロードしてもセッションが維持されるようになります。
-# 以前の os.urandom(24) は毎回違う値を生成するため、ログインが維持できない原因でした。
-# ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 app.secret_key = os.environ.get('SECRET_KEY')
 
 # Supabaseの接続情報を環境変数から取得
@@ -34,7 +29,6 @@ def landing():
 
 
 # ★★★ ここから認証関連のルートを追加・修正 ★★★
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
@@ -73,8 +67,7 @@ def manage():
     # セッションに「ログイン済み」の印がなければ、ログインページに飛ばす
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-        
-    # --- 以下は既存の処理 ---
+
     try:
         response = supabase.table('words').select("*").order('id', desc=False).execute()
         words = response.data

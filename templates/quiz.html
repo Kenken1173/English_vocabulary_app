@@ -30,7 +30,6 @@
             </div>
             <div class="quiz-navigation">
                 <a href="{{ url_for('quiz') }}" class="quiz-btn next-btn">次の問題へ</a>
-                <!-- ★★★ ここのリンクを修正しました ★★★ -->
                 <a href="{{ url_for('manage') }}" class="quiz-btn back-btn">管理画面に戻る</a>
             </div>
             
@@ -39,7 +38,6 @@
             <div class="no-quiz">
                 <p>クイズに出題できる単語がありません。</p>
                 <p>まずは管理画面から単語を登録してください。</p>
-                <!-- ★★★ ここのリンクを修正しました ★★★ -->
                 <a href="{{ url_for('manage') }}" class="quiz-btn back-btn">登録ページへ</a>
             </div>
             {% endif %}
